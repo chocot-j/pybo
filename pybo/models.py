@@ -23,7 +23,7 @@ class Answer(models.Model):
     voter = models.ManyToManyField(User, related_name='voter_answer')
 
 class Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_answer')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_comment')
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
     content = models.TextField()
     create_date = models.DateTimeField()

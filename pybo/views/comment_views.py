@@ -13,27 +13,27 @@ def comment_create(request, answer_id):
     """
     pybo 댓글 등록
     """
-    question = get_object_or_404(Answer, pk=answer_id)
+    answer = get_object_or_404(Answer, pk=answer_id)
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.author = request.user  # author 속성에 로그인 계정 저장
             comment.create_date = timezone.now()
-            comment.question = question
+            comment.answer = answer
             comment.save()
             return redirect('{}#comment_{}'.format(
-                resolve_url('pybo:detail', question_id=question.id), comment.id))
+                resolve_url('pybo:detail', question_id=answer.question.id), comment.id))
     else:
         return HttpResponseNotAllowed('Only POST is possible.')
-    context = {'question': question, 'form': form}
+    context = {'answer': answer, 'form': form}
     return render(request, 'pybo/question_detail.html', context)
 
 
 @login_required(login_url='common:login')
 def comment_modify(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
-    if request.user != answer.author:
+    if request.user != comment.author:
         messages.error(request, '수정권한이 없습니다')
         return redirect('pybo:detail', question_id=comment.answer.question.id)
     if request.method == "POST":

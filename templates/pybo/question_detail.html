@@ -95,9 +95,30 @@
             </div>
             {% endif %}
             <div>
-                <a href="{% url 'pybo:comment_create' answer.id%}" class="small">
-                    <small>댓글 추가 ..</small>
-                </a>
+                <!-- 댓글 등록 -->
+                <form action="{% url 'pybo:comment_create' answer.id %}" method="post" class="my-3">
+                    {% csrf_token %}
+                    <!-- 오류표시 Start -->
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {% for field in form %}
+                        {% if field.errors %}
+                        <div>
+                            <strong>{{ field.label }}</strong>
+                            {{ field.errors }}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <!-- 오류표시 End -->
+                    <div class="mb-3">
+                        <label for="content" class="form-label">댓글내용</label>
+                        <textarea {% if not user.is_authenticated %}disabled{% endif %}
+                        name="content" id="content" class="form-control" rows="3"></textarea>
+                    </div>
+                    <input type="submit" value="댓글등록" class="btn btn-outline-primary">
+                </form>
             </div>
             <!--답변 댓글 end-->
         </div>
