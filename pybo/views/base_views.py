@@ -27,8 +27,9 @@ def index(request):
     # 페이징 처리
     paginator = Paginator(question_list, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
+    end_page = len(paginator.page_range)
     
-    context = {'question_list': page_obj, 'page': page, 'kw': kw}
+    context = {'question_list': page_obj, 'page': page, 'end_page':end_page, 'kw': kw}
     return render(request, 'pybo/question_list.html', context)
 
 
