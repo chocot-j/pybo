@@ -79,14 +79,14 @@
                 <div class="comment py-2 text-muted">
                     <span style="white-space: pre-line;">{{ comment.content }}</span>
                     <span>
-                        - {{ comment.author }}, {{ comment.create_date }}
+                        | {{ comment.author }}, {{ comment.create_date }}
                         {% if comment.modify_date %}
                         (수정: {{ comment.modify_date }})
                         {% endif %}
                     </span>
                     {% if request.user == comment.author %}
-                    <a href="{% url 'pybo:comment_modify' comment.id %}" class="small">수정</a>
-                    <a href="#" class="small delete" data-uri="{% url 'pybo:comment_delete' comment.id %}">
+                    <a href="{% url 'pybo:comment_modify' comment.id %}" class="small btn btn-outline-secondary btn-sm">수정</a>
+                    <a href="#" class="small delete btn btn-outline-secondary btn-sm" data-uri="{% url 'pybo:comment_delete' comment.id %}">
                         삭제
                     </a>
                     {% endif %}
