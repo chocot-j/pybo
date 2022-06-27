@@ -26,7 +26,7 @@ def comment_create(request, answer_id):
                 resolve_url('pybo:detail', question_id=answer.question.id), comment.id))
     else:
         return HttpResponseNotAllowed('Only POST is possible.')
-    context = {'answer': answer, 'form': form}
+    context = {'question': answer.question, 'answer': answer, 'form': form}
     return render(request, 'pybo/question_detail.html', context)
 
 
